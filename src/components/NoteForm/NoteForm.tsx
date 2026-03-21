@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./NoteForm.module.css";
 import type { CreateNoteData } from "../../services/noteService";
-import type { NoteTag } from "../../type/note";
+import type { NoteTag } from "../../types/note";
 
 export interface NoteFormProps {
   onSubmit: (values: CreateNoteData) => void;
