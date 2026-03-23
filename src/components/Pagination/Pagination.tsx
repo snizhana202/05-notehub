@@ -1,25 +1,29 @@
-import ReactPaginate from "react-paginate";
+import type { ReactPaginateProps } from "react-paginate";
 import css from "./Pagination.module.css";
+import type { ComponentType } from "react";
+import ReactPaginateModule from "react-paginate";
+
+type ModuleWithDefault<T> = { default: T };
+
+
+const ReactPaginate = (
+  ReactPaginateModule as unknown as ModuleWithDefault<ComponentType<ReactPaginateProps>>
+).default;
 
 interface PaginationProps {
-  total: number;
-  perPage: number;
-  page: number;
-  onPageChange: (page: number) => void;
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (nextPage: number) => void;
 }
 
-export default function Pagination({ total, perPage, page, onPageChange }: PaginationProps) {
-  const totalPages = Math.ceil(total / perPage);
-
-  if (totalPages <= 1) return null;
-
+export default function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
   return (
     <ReactPaginate
       pageCount={totalPages}
       pageRangeDisplayed={5}
       marginPagesDisplayed={1}
       onPageChange={({ selected }) => onPageChange(selected + 1)}
-      forcePage={page - 1}
+      forcePage={currentPage - 1}
       containerClassName={css.pagination}
       activeClassName={css.active}
       nextLabel="→"
@@ -27,3 +31,28 @@ export default function Pagination({ total, perPage, page, onPageChange }: Pagin
     />
   );
 }
+
+
+// interface PaginationProps {
+//   total: number;
+//   perPage: number;
+//   page: number;
+//   onPageChange: (page: number) => void;
+// }
+
+// export default function Pagination({ total, page, onPageChange }: PaginationProps) {
+
+//   return (
+//     <ReactPaginate
+//       pageCount={total}
+//       pageRangeDisplayed={5}
+//       marginPagesDisplayed={1}
+//       onPageChange={({ selected }) => onPageChange(selected + 1)}
+//       forcePage={page - 1}
+//       containerClassName={css.pagination}
+//       activeClassName={css.active}
+//       nextLabel="→"
+//       previousLabel="←"
+//     />
+//   );
+// }
